@@ -11,11 +11,13 @@ import pandas as pd
 from sklearn.model_selection import GridSearchCV
 import lightgbm as lgb
 
-x_train = pd.read_csv(os.getcwd()+"/data/x_train.csv")
-y_label = np.loadtxt(os.getcwd()+"/data/y_train.txt", delimiter=',')
-x_test = pd.read_csv(os.getcwd()+"/data/x_test.csv")
-
-gbm = lgb.LGBMClassifier(random_state=1, n_estimators=90, num_leaves=30, learning_rate=0.05)
+x_train = pd.read_csv(os.getcwd() + "/data/x_train.csv")
+x_test= pd.read_csv(os.getcwd() + "/data/x_test.csv")
+y_label = x_train["Survived"]
+print(y_label.shape)
+x_train.drop("Survived", axis=1, inplace=True)
+print(x_train.shape)
+gbm = lgb.LGBMClassifier(random_state=1, n_estimators=50, num_leaves=20, learning_rate=0.05)
 gbm.fit(x_train, y_label)
 y_test = gbm.predict(x_test)
 
