@@ -13,11 +13,12 @@ import lightgbm as lgb
 
 x_train = pd.read_csv(os.getcwd() + "/data/x_train.csv")
 x_test= pd.read_csv(os.getcwd() + "/data/x_test.csv")
-y_label = x_train["Survived"]
-print(y_label.shape)
-x_train.drop("Survived", axis=1, inplace=True)
-print(x_train.shape)
-gbm = lgb.LGBMClassifier(random_state=1, n_estimators=50, num_leaves=20, learning_rate=0.05)
+y_label = np.loadtxt(os.getcwd() + "/data/y_label.txt", delimiter=',')
+
+# print(y_label.shape)
+# x_train.drop("Survived", axis=1, inplace=True)
+# print(x_train.shape)
+gbm = lgb.LGBMClassifier(n_estimators=52, num_leaves=11, learning_rate=0.05)
 gbm.fit(x_train, y_label)
 y_test = gbm.predict(x_test)
 

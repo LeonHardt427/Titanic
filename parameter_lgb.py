@@ -17,19 +17,20 @@ from sklearn.ensemble import RandomForestClassifier
 if __name__ == '__main__':
 
     x_train = pd.read_csv(os.getcwd()+"/data/x_train.csv")
-    y_label = x_train["Survived"]
-    print(y_label.shape)
-    x_train.drop("Survived", axis=1, inplace=True)
-    print(x_train.shape)
+    y_label = np.loadtxt(os.getcwd() + "/data/y_label.txt", delimiter=',')
+    # print(y_label.shape)
+    # x_train.drop("Survived", axis=1, inplace=True)
+    # x_train = x_train.loc[:, :].values
+    # print(x_train.shape)
     parameters = {}
-    parameters["n_estimators"] = range(10, 50, 5)
-    # parameters["lgb__num_leaves"] = range(10, 50, 5)
-    # parameters["lgb__learning_rate"] = [0.05, 0.01]
+    parameters["n_estimators"] = range(47, 100, 5)
+    parameters["num_leaves"] = range(5, 15, 2)
+    parameters["learning_rate"] = [0.05]
     # parameters["g/"]
     # im = Imputer(strategy="mean")
     # x_train = im.fit_transform(x_train)
     # x_test = im.transform(x_test)
-    grid = GridSearchCV(estimator=RandomForestClassifier(random_state=1),
+    grid = GridSearchCV(estimator=lgb.LGBMClassifier(),
                         param_grid=parameters,
                         cv=5,
                         scoring='accuracy',
